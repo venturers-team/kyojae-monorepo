@@ -1,0 +1,23 @@
+# dependencies
+node_modules
+
+# build outputs
+dist
+.next
+.astro
+
+# vercel
+.vercel
+
+# env
+.env
+.env.*
+!.env.example
+
+# logs
+*.log
+
+# editor / OS
+.DS_Store
+
+# NOTE: harness 디렉터리(.claude/, .cursor/ 등)는 의도적으로 제외하지 않음 — 팀과 공유
