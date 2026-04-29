@@ -59,10 +59,18 @@ docs/
 ## 코드 작업 규칙
 
 ### Git
-- `main` 브랜치 직접 푸시 자제, 작업별 브랜치 후 PR 권장
+- **main 브랜치 직접 commit·push** — 솔로 dev 흐름. feature branch + PR 의례는 사용 안 함
 - 사용자 명시 요청 없이는 commit 만들지 않음
 - 커밋 메시지: 영문 동사 시작 권장 (Conventional Commits 스타일 부드럽게)
-- 푸시는 사용자 명시 요청 시에만
+- 푸시는 사용자 명시 요청 시에만 (또는 본 가이드 흐름상 commit 후 자연스러운 push)
+
+### 단계 진입 게이트 (build + Playwright QA)
+**매 단계 commit·push 전 다음 두 가지 모두 통과 필수.** 통과 못 하면 다음 단계 진입 금지.
+
+1. `pnpm --filter <app> build` — exit 0
+2. Playwright e2e smoke test — 콘솔 에러 0, 메인 페이지 200, 핵심 인터랙션 검증
+
+build만으로는 hydration 오류·런타임 에러·시각적 회귀를 못 잡으므로 e2e가 회귀 차단의 핵심. monorepo 루트에 Playwright 단일 설치, 각 앱별 `apps/<name>/tests/e2e/`에 spec. paperclip 4-A retroactive QA에서 첫 셋업 후 portal·psst·lean-startup 복제.
 
 ### Vercel 작업
 - 4개 Vercel 프로젝트(`team_gB3qTz6Zjg6Gg5hkBONDrhsM`)는 monorepo `Root Directory` 설정으로 재구성 예정

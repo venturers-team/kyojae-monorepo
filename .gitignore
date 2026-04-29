@@ -17,6 +17,11 @@ dist
 # logs
 *.log
 
+# playwright
+test-results
+playwright-report
+.playwright-cache
+
 # editor / OS
 .DS_Store
 
