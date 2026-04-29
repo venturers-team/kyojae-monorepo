@@ -1,0 +1,100 @@
+---
+title: Quick Start — 5분 만에 첫 실행까지
+description: 설치부터 AI 에이전트가 실제로 일하기까지 가장 짧은 경로
+slug: 00-quick-start
+---
+
+## 먼저 돌려보고, 그다음에 이해한다
+
+이 페이지는 **설명 최소, 동작 최대**. 복사·클릭만 따라가면 5분 안에 로컬 Claude 에이전트가 실제로 태스크를 수행하기 시작한다. 각 단계 끝에 "왜 이렇게 하는가"를 풀어놓은 본 챕터 링크를 달아뒀으니, 궁금해지는 순간 거기로 넘어가면 된다.
+
+## 사전 준비
+
+| 도구 | 최소 버전 | 확인 명령 |
+|---|---|---|
+| Node.js | 20 이상 | `node -v` |
+| Claude Code CLI | 설치 및 로그인 완료 | `claude --version` |
+
+Node.js는 [nodejs.org](https://nodejs.org)에서 LTS로, Claude Code CLI는 [docs.claude.com/claude-code](https://docs.claude.com/en/docs/claude-code) 공식 가이드 따라 설치·로그인. 외부 DB·Docker는 필요 없다.
+
+## 1. 설치 — 명령 한 줄
+
+```bash
+npx paperclipai onboard --yes
+```
+
+설치가 끝나면 로컬 서버가 올라오고 브라우저에서 [localhost:3100](http://localhost:3100)이 자동으로 열린다. 첫 방문이면 온보딩 마법사가 바로 뜬다.
+
+> 더 자세히 → [PaperClip 설치](/01-setup/01-install/)
+
+## 2. 온보딩 마법사 — 네 단계
+
+### ① 회사 이름
+
+![회사 이름 입력 단계](/screenshots/01-onboarding-company.png)
+
+`TestCo`처럼 간단한 이름으로 충분하다. **Mission / goal**은 나중에 채워도 된다.
+
+### ② 첫 에이전트 선택
+
+![에이전트 어댑터 선택 — 8개 옵션](/screenshots/02-onboarding-agent.png)
+
+어댑터로 **Claude Code · Codex · Gemini CLI · Hermes · OpenCode · Pi · Cursor** 총 8개 로컬 CLI가 준비돼 있다. 기본 추천은 **Claude Code (local)**. 즉 **OpenRouter 같은 API 키가 필요 없다** — 여러분 컴퓨터에 설치된 `claude` 명령어를 서브프로세스로 호출하는 방식.
+
+`Test now` 버튼으로 어댑터가 실제로 응답하는지 확인할 수 있다.
+
+![Claude Code 환경 체크 통과](/screenshots/02c-adapter-test-passed.png)
+
+### ③ 첫 태스크
+
+![첫 태스크 정의 단계](/screenshots/03-onboarding-task.png)
+
+예시 문구가 이미 채워져 있다. 그대로 둬도 되고, 여러분의 실제 작업으로 바꿔도 된다.
+
+### ④ Launch
+
+![Launch 단계 — 요약 확인](/screenshots/04-onboarding-launch.png)
+
+**Create & Open Issue** 버튼을 누르면 회사·에이전트·첫 이슈가 한 번에 생성되고, 에이전트가 즉시 태스크를 수행하기 시작한다.
+
+## 3. 대시보드 — 에이전트가 일하는 중
+
+![첫 대시보드 — CEO running 상태](/screenshots/05-dashboard-initial.png)
+
+**Agents Enabled · Tasks In Progress · Month Spend · Pending Approvals** 네 개 KPI 카드가 상단에 뜨고, 그 위에 CEO 카드가 **Live now / RUNNING** 배지와 함께 실시간 진행 상황을 보여준다. 로컬 Claude 호출이라 **Month Spend는 계속 `$0.00`**.
+
+> 더 자세히 → [대시보드의 네 지표](/02-explore/01-dashboard/)
+
+## 4. 이슈 타임라인 — 에이전트의 블랙박스
+
+![TESA-1 이슈 — Chat 타임라인](/screenshots/07-issue-timeline.png)
+
+이슈 하나를 클릭하면 상세 페이지가 열린다. 상단에 제목·설명, 우측에 Properties(Status·Priority·Assignee 등), 가운데에 에이전트의 실시간 메시지. "**Worked · ran 8 commands, called 6 tools**"처럼 에이전트가 실제로 무엇을 호출했는지까지 투명하게 기록된다.
+
+> 더 자세히 → [태스크의 흐름 따라가기](/03-operate/03-task-flow/)
+
+## 5. 조직이 자라난다
+
+![시간이 지난 후 — CEO 아래 CTO 자동 생성](/screenshots/12-org-chart-grown.png)
+
+흥미로운 점: 첫 에이전트는 CEO 혼자였지만, 몇 분 지나면 CEO가 필요에 따라 **CTO를 직접 생성**한다. AGENTS.md에 명시된 위임 규칙(코드·인프라 작업은 CTO에게) 때문. 조직이 스스로 자라나는 모습이 Org Chart 페이지에서 시각화된다.
+
+> 더 자세히 → [조직도 읽기](/02-explore/02-org-chart/)
+
+## 여기까지 왔다면
+
+축하한다. AI 에이전트가 실제로 코드·파일·결정을 만들고 있다. 다음 중 하나:
+
+- **처음부터 차근차근** → [01. 시작 준비](/01-setup/)부터. 대시보드의 각 숫자가 뜻하는 것, 에이전트 내부 구조(Instructions·Skills·Configuration·Runs 네 탭), 안전장치(Budget·Governance) 설정 방법을 순서대로.
+- **태스크 더 주기** → 새 Initiative를 Goals 페이지에서 추가하거나, 사이드바의 **New Issue**로 바로 새 이슈 할당.
+
+## 막혔다면
+
+| 증상 | 해결 |
+|---|---|
+| `claude: command not found` | Claude Code CLI 설치 확인. `which claude`로 경로 확인 |
+| 온보딩 Test now에서 Failed | `claude` 로그인 상태인지 확인 (`claude login`) |
+| 브라우저가 localhost:3100에서 안 열림 | 서버 창 닫혔는지 확인. 닫혔으면 `npx paperclipai run` (onboard 아님) |
+| 에이전트가 움직이지 않음 | CEO 상세 → **Run Heartbeat** 버튼 수동 실행 |
+
+그 외 이슈는 각 본 챕터의 해당 섹션에서 답을 찾을 수 있다.

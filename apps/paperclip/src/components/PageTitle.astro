@@ -1,0 +1,18 @@
+---
+const url = Astro.url.pathname;
+const isLanding = url === '/' || url === '';
+---
+{!isLanding && (
+  <h1 id="_top" class="page-title">
+    <slot />
+  </h1>
+)}
+
+<style>
+  .page-title {
+    font-size: var(--sl-text-h1);
+    line-height: var(--sl-line-height-headings);
+    font-weight: 600;
+    color: var(--sl-color-white);
+  }
+</style>

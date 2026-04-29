@@ -1,0 +1,27 @@
+/* 랜딩(splash) 페이지 전용 스타일.
+ * .landing-hero 가 있는 페이지에만 적용되므로 docs 페이지에는 영향을 주지 않는다. */
+
+/* hero가 width: 100vw 로 풀블리드되는데, 100vw 는 세로 스크롤바 폭까지 포함해서
+ * 세로 스크롤이 생기는 순간 hero가 뷰포트보다 넓어져 미세한 가로 스크롤이 생긴다.
+ * 랜딩에서만 가로 스크롤을 막아 이를 해결한다. */
+body:has(.landing-hero) {
+  overflow-x: hidden;
+}
+
+/* splash 레이아웃에는 PageTitle 전용 빈 content-panel이 먼저 렌더되고,
+ * 그 아래 두 번째 content-panel에 hero + 본문이 들어간다.
+ * 두 패널 사이의 hairline 보더가 헤더와 hero 사이에 어두운 가로줄로 보이므로,
+ * 빈 첫 패널을 숨기고 두 번째 패널의 상단 여백/보더를 제거한다. */
+body:has(.landing-hero) main > .content-panel:first-of-type {
+  display: none !important;
+}
+
+body:has(.landing-hero) main > .content-panel {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+body:has(.landing-hero) main > .content-panel + .content-panel {
+  border-top: none !important;
+  padding-top: 0 !important;
+}
