@@ -1,0 +1,40 @@
+---
+import { Compass } from 'lucide-react';
+import { siteMeta } from '../../data/site';
+---
+
+<footer class="relative overflow-hidden border-t border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-950">
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 bg-gradient-to-r from-indigo-500/5 via-blue-500/5 to-cyan-400/5"
+  ></div>
+  <div class="relative mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 text-sm text-slate-500 md:flex-row md:items-start md:justify-between dark:text-slate-400">
+    <div class="flex items-start gap-3">
+      <span class="relative inline-flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-indigo-500 via-blue-500 to-cyan-400 ring-1 ring-black/5">
+        <Compass className="h-5 w-5 text-white" strokeWidth={2.4} />
+      </span>
+      <div>
+        <p class="font-semibold text-slate-800 dark:text-slate-100">{siteMeta.title}</p>
+        <p class="mt-1 text-xs">
+          © {siteMeta.copyrightYear} {siteMeta.professorName} ({siteMeta.professorNameEn}) 교수 ·
+          {siteMeta.institution} {siteMeta.institutionDept}
+        </p>
+        <p class="text-xs text-slate-400 dark:text-slate-500">
+          {siteMeta.institutionEn}, {siteMeta.institutionDeptEn}
+        </p>
+        <p class="mt-2 text-xs">
+          Contact:{' '}
+          <a href={`mailto:${siteMeta.contactEmail}`} class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-300">
+            {siteMeta.contactEmail}
+          </a>
+        </p>
+      </div>
+    </div>
+    <nav class="flex flex-wrap items-center gap-4 text-xs" aria-label="푸터 링크">
+      <a href="/about" class="transition hover:text-indigo-600 dark:hover:text-indigo-300">포털 소개</a>
+      <a href="/explore" class="transition hover:text-indigo-600 dark:hover:text-indigo-300">교재 탐색</a>
+      <a href="/pathways" class="transition hover:text-indigo-600 dark:hover:text-indigo-300">학습 경로</a>
+      <a href={`mailto:${siteMeta.contactEmail}`} class="transition hover:text-indigo-600 dark:hover:text-indigo-300">문의하기</a>
+    </nav>
+  </div>
+</footer>

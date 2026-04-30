@@ -1,0 +1,156 @@
+---
+const stages = [
+  {
+    key: 'P',
+    name: 'Problem',
+    korean: '문제 정의',
+    question: '해결할 가치가 있는 고통인가?',
+    grad: 'linear-gradient(135deg, #F87171 0%, #EC4899 100%)',
+    glow: 'rgba(236, 72, 153, 0.35)',
+  },
+  {
+    key: 'S',
+    name: 'Solution',
+    korean: '솔루션 설계',
+    question: '그 고통을 어떻게 없애는가?',
+    grad: 'linear-gradient(135deg, #818CF8 0%, #A78BFA 100%)',
+    glow: 'rgba(129, 140, 248, 0.35)',
+  },
+  {
+    key: 'S',
+    name: 'Scale-up',
+    korean: '확장 전략',
+    question: '얼마나 커질 수 있는가?',
+    grad: 'linear-gradient(135deg, #22D3EE 0%, #6366F1 100%)',
+    glow: 'rgba(34, 211, 238, 0.35)',
+  },
+  {
+    key: 'T',
+    name: 'Team',
+    korean: '팀 구성',
+    question: '왜 이 팀인가?',
+    grad: 'linear-gradient(135deg, #A3E635 0%, #14B8A6 100%)',
+    glow: 'rgba(163, 230, 53, 0.35)',
+  },
+];
+---
+
+<section class="psst-flow">
+  {
+    stages.map((s, i) => (
+      <article class="psst-card" style={`--card-grad: ${s.grad}; --card-glow: ${s.glow}`}>
+        <div class="psst-card__top">
+          <span class="psst-card__num">{String(i + 1).padStart(2, '0')}</span>
+          <span class="psst-card__letter">{s.key}</span>
+        </div>
+        <div class="psst-card__name">{s.name}</div>
+        <div class="psst-card__korean">{s.korean}</div>
+        <div class="psst-card__question">{s.question}</div>
+      </article>
+    ))
+  }
+</section>
+
+<style>
+  .psst-flow {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin: 2.5rem 0;
+  }
+
+  .psst-card {
+    position: relative;
+    padding: 1.4rem 1.2rem 1.6rem;
+    border-radius: 16px;
+    background: var(--psst-bg-raise);
+    border: 1px solid var(--psst-line);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    overflow: hidden;
+    transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+  }
+
+  .psst-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--card-grad);
+    opacity: 0;
+    transition: opacity 200ms ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .psst-card > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .psst-card:hover {
+    transform: translateY(-3px);
+    border-color: transparent;
+    box-shadow: 0 12px 30px -12px var(--card-glow);
+  }
+
+  .psst-card:hover::before {
+    opacity: 0.08;
+  }
+
+  .psst-card__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+  }
+
+  .psst-card__num {
+    font-family: var(--sl-font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--psst-ink-mute);
+    padding: 0.25rem 0.55rem;
+    background: var(--psst-bg-mute);
+    border-radius: 999px;
+  }
+
+  .psst-card__letter {
+    font-weight: 800;
+    font-size: 1.6rem;
+    line-height: 1;
+    background: var(--card-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.03em;
+  }
+
+  .psst-card__name {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--psst-ink);
+    letter-spacing: -0.01em;
+  }
+
+  .psst-card__korean {
+    font-size: 0.85rem;
+    color: var(--psst-ink-mute);
+    margin-top: -0.1rem;
+  }
+
+  .psst-card__question {
+    margin-top: 0.6rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--psst-line);
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--psst-ink-soft);
+  }
+
+  @media (max-width: 720px) {
+    .psst-flow {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

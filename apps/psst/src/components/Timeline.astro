@@ -1,0 +1,95 @@
+---
+interface Step {
+  label: string;
+  title: string;
+  body: string;
+}
+
+interface Props {
+  steps: Step[];
+}
+
+const { steps } = Astro.props;
+---
+
+<ol class="timeline">
+  {
+    steps.map((s, i) => (
+      <li class="timeline__item">
+        <div class="timeline__marker">
+          <span class="timeline__num">{String(i + 1).padStart(2, '0')}</span>
+          {i < steps.length - 1 && <span class="timeline__connector" aria-hidden />}
+        </div>
+        <div class="timeline__content">
+          <div class="timeline__label">{s.label}</div>
+          <div class="timeline__title">{s.title}</div>
+          <div class="timeline__body">{s.body}</div>
+        </div>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .timeline__item {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 1rem;
+    padding-bottom: 1.3rem;
+  }
+  .timeline__marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .timeline__num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background: var(--psst-bg-raise);
+    border: 1px solid var(--psst-line-strong);
+    color: var(--psst-primary);
+    font-family: var(--sl-font-mono);
+    font-weight: 600;
+    font-size: 0.82rem;
+  }
+  .timeline__connector {
+    flex: 1;
+    width: 2px;
+    background: linear-gradient(180deg, var(--psst-primary) 0%, var(--psst-line) 100%);
+    min-height: 1.5rem;
+  }
+  .timeline__content {
+    padding: 0 0 0 0.2rem;
+  }
+  .timeline__label {
+    font-family: var(--sl-font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    color: var(--psst-primary);
+    margin-bottom: 0.25rem;
+  }
+  .timeline__title {
+    font-weight: 600;
+    font-size: 1.02rem;
+    color: var(--psst-ink);
+    margin-bottom: 0.3rem;
+  }
+  .timeline__body {
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: var(--psst-ink-soft);
+  }
+</style>

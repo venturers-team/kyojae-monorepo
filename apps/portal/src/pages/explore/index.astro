@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CourseCardGrid from '../../components/shared/CourseCardGrid';
+import GradientText from '../../components/effects/GradientText';
+import Squares from '../../components/effects/Squares';
+import { courses } from '../../data/courses';
+---
+
+<BaseLayout title="교재 탐색" description="6개 교재·도구를 필터와 검색으로 빠르게 찾아보세요.">
+  <section class="relative mx-auto max-w-6xl px-4 py-12">
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-0 -z-10 opacity-50 dark:opacity-20"
+    >
+      <Squares
+        speed={0.25}
+        squareSize={48}
+        direction="diagonal"
+        borderColor="rgba(99, 102, 241, 0.1)"
+        hoverFillColor="rgba(99, 102, 241, 0.08)"
+        className="h-full w-full"
+        client:load
+      />
+    </div>
+    <div class="mb-8 flex flex-col gap-2">
+      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-indigo-600">/explore</p>
+      <h1 class="text-3xl font-bold tracking-tight text-slate-900 md:text-4xl dark:text-slate-100">
+        <GradientText colors={['#4f46e5', '#3b82f6', '#22d3ee']} client:load>
+          교재·도구 탐색
+        </GradientText>
+      </h1>
+      <p class="max-w-2xl text-sm text-slate-500 dark:text-slate-400">
+        유형·난이도·상태 필터와 키워드 검색으로 원하는 교재를 즉시 찾을 수 있습니다. 카드의 "미리보기" 버튼으로 페이지 이동 없이 목차를 살펴볼 수 있습니다.
+      </p>
+    </div>
+    <CourseCardGrid
+      courses={courses}
+      showFilter
+      showPreview
+      client:load
+    />
+
+    <div class="mt-10 rounded-2xl border border-dashed border-indigo-300 bg-indigo-50/60 p-6 text-sm text-indigo-800 dark:border-indigo-500/40 dark:bg-indigo-500/10 dark:text-indigo-200">
+      <p class="font-semibold">아직 어떤 걸 골라야 할지 모르겠나요?</p>
+      <p class="mt-1">
+        <a href="/pathways" class="underline">학습 경로 가이드</a>에서 3가지 페르소나 중 하나를 선택하면, 단계별 로드맵이 제공됩니다.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

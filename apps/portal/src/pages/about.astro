@@ -1,0 +1,107 @@
+---
+import { GraduationCap } from 'lucide-react';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GradientText from '../components/effects/GradientText';
+import Squares from '../components/effects/Squares';
+import { siteMeta } from '../data/site';
+import { courses } from '../data/courses';
+---
+
+<BaseLayout title="포털 소개" description={siteMeta.description}>
+  <section class="relative mx-auto max-w-5xl px-4 py-16">
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-0 -z-10 opacity-50 dark:opacity-20"
+    >
+      <Squares
+        speed={0.25}
+        squareSize={48}
+        direction="diagonal"
+        borderColor="rgba(99, 102, 241, 0.1)"
+        hoverFillColor="rgba(99, 102, 241, 0.08)"
+        className="h-full w-full"
+        client:load
+      />
+    </div>
+    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-indigo-600">/about</p>
+    <h1 class="mt-2 text-4xl font-bold tracking-tight text-slate-900 md:text-5xl dark:text-slate-100">
+      <GradientText colors={['#4f46e5', '#3b82f6', '#22d3ee']} client:load>
+        포털을 소개합니다
+      </GradientText>
+    </h1>
+    <p class="mt-4 max-w-3xl text-base text-slate-600 dark:text-slate-300">
+      {siteMeta.description}
+    </p>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-[1fr_1.2fr] md:items-start">
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+        <div class="flex items-center gap-4">
+          <span class="relative inline-flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-500 via-blue-500 to-cyan-400 ring-1 ring-black/5">
+            <GraduationCap className="h-7 w-7 text-white" strokeWidth={2.4} />
+            <span class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/10 to-white/10"></span>
+          </span>
+          <div>
+            <p class="text-lg font-semibold text-slate-900 dark:text-slate-100">
+              {siteMeta.professorName} 교수
+              <span class="ml-1 text-xs font-normal text-slate-400 dark:text-slate-500">({siteMeta.professorNameEn})</span>
+            </p>
+            <p class="text-sm text-slate-500 dark:text-slate-400">
+              {siteMeta.professorTitle}
+            </p>
+          </div>
+        </div>
+        <p class="mt-5 text-sm text-slate-600 dark:text-slate-300">
+          스타트업 교육과 AI 응용 연구를 바탕으로 학생들이 실제로 제품을 만들고, 검증하고, 성장시킬 수 있도록 돕는 교재와 도구를 개발하고 있습니다.
+        </p>
+        <div class="mt-4 flex flex-wrap gap-1.5">
+          <span class="inline-flex rounded-md bg-indigo-50 px-2 py-0.5 text-xs text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-200">AI</span>
+          <span class="inline-flex rounded-md bg-indigo-50 px-2 py-0.5 text-xs text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-200">스타트업 교육</span>
+          <span class="inline-flex rounded-md bg-indigo-50 px-2 py-0.5 text-xs text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-200">풀스택 개발</span>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        <article class="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-900">
+          <h2 class="text-lg font-semibold text-slate-900 dark:text-slate-100">이 포털을 만든 이유</h2>
+          <p class="mt-3 text-sm text-slate-600 dark:text-slate-300">
+            스타트업 수업에서 학생들이 가장 자주 묻는 질문은 "지금 뭘부터 공부해야 하나요?"였습니다. 교재와 도구는 곳곳에 흩어져 있고, 어떤 순서로 무엇을 골라야 하는지 알기 어려웠습니다. 이 포털은 6개의 교재·도구를 한 눈에 탐색하고, 자신의 목표에 맞는 학습 경로를 바로 시작할 수 있도록 만들어진 단일 진입점입니다.
+          </p>
+          <p class="mt-3 text-sm text-slate-600 dark:text-slate-300">
+            모든 교재는 한동대 수업에서 직접 운영되며, 학생 피드백을 바탕으로 지속적으로 개선됩니다.
+          </p>
+        </article>
+
+        <article class="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-900">
+          <h2 class="text-lg font-semibold text-slate-900 dark:text-slate-100">교재 개발 연표</h2>
+          <ul class="mt-4 space-y-3">
+            {courses.map((course) => (
+              <li class="flex items-start gap-3 text-sm">
+                <span
+                  class="mt-1 inline-block h-2.5 w-2.5 shrink-0 rounded-full"
+                  style={`background-color: ${course.color}`}
+                ></span>
+                <div>
+                  <p class="font-semibold text-slate-900 dark:text-slate-100">{course.title}</p>
+                  <p class="text-slate-500 dark:text-slate-400">{course.subtitle}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </article>
+
+        <article class="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-900">
+          <h2 class="text-lg font-semibold text-slate-900 dark:text-slate-100">문의하기</h2>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+            포털 개선 제안이나 교재 관련 문의는 아래 이메일로 보내주세요.
+          </p>
+          <a
+            href={`mailto:${siteMeta.contactEmail}`}
+            class="mt-3 inline-flex items-center gap-2 rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500"
+          >
+            {siteMeta.contactEmail}
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

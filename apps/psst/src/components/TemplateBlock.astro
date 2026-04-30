@@ -1,0 +1,65 @@
+---
+interface Props {
+  title: string;
+  template: string;
+}
+const { title, template } = Astro.props;
+---
+
+<figure class="psst-template">
+  <figcaption class="psst-template__header">
+    <span class="psst-template__badge">TEMPLATE</span>
+    <span class="psst-template__title">{title}</span>
+  </figcaption>
+  <pre class="psst-template__body"><code>{template}</code></pre>
+</figure>
+
+<style>
+  .psst-template {
+    margin: 2rem 0;
+    padding: 0;
+    border: 1px solid var(--psst-line);
+    border-radius: 16px;
+    background: var(--psst-bg-raise);
+    overflow: hidden;
+    transition: border-color 200ms ease, box-shadow 200ms ease;
+  }
+  .psst-template:hover {
+    border-color: var(--psst-primary);
+    box-shadow: 0 12px 30px -16px rgba(99, 102, 241, 0.35);
+  }
+  .psst-template__header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.85rem 1.3rem;
+    background: var(--psst-bg-mute);
+    border-bottom: 1px solid var(--psst-line);
+  }
+  .psst-template__badge {
+    font-family: var(--sl-font-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    padding: 0.3rem 0.7rem;
+    background: var(--psst-gradient);
+    color: #FFFFFF;
+    border-radius: 999px;
+  }
+  .psst-template__title {
+    font-weight: 600;
+    color: var(--psst-ink);
+    font-size: 0.98rem;
+  }
+  .psst-template__body {
+    margin: 0;
+    padding: 1.2rem 1.4rem 1.4rem;
+    background: transparent;
+    border: none;
+    color: var(--psst-ink);
+    font-family: var(--sl-font-mono);
+    font-size: 0.92rem;
+    line-height: 1.8;
+    white-space: pre-wrap;
+  }
+</style>

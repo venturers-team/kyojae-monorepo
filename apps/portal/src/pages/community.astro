@@ -1,0 +1,169 @@
+---
+import { Award, Rocket, TrendingUp, Flag } from 'lucide-react';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GradientText from '../components/effects/GradientText';
+import Squares from '../components/effects/Squares';
+import { communities } from '../data/community';
+import { communityTypeLabel } from '../types/community';
+
+const kindIcon = {
+  award: Award,
+  launch: Rocket,
+  funding: TrendingUp,
+  milestone: Flag,
+};
+---
+
+<BaseLayout
+  title="커뮤니티 — SODA · Venturers"
+  description="조성배 교수가 이끄는 한동대 앱 개발 동아리 SODA와 창업학회 Venturers의 소개와 주요 성과."
+>
+  <section class="relative mx-auto max-w-6xl px-4 py-12">
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-0 -z-10 opacity-50 dark:opacity-20"
+    >
+      <Squares
+        speed={0.3}
+        squareSize={52}
+        direction="right"
+        borderColor="rgba(59, 130, 246, 0.1)"
+        hoverFillColor="rgba(59, 130, 246, 0.08)"
+        className="h-full w-full"
+        client:load
+      />
+    </div>
+    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-indigo-600">/community</p>
+    <h1 class="mt-2 text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
+      <GradientText colors={['#4f46e5', '#3b82f6', '#22d3ee']} client:load>
+        교수가 이끄는 커뮤니티
+      </GradientText>
+    </h1>
+    <p class="mt-2 max-w-2xl text-sm text-slate-500">
+      교재가 이론이라면, 여기는 실행입니다. 조성배 교수가 직접 지도·운영하는 앱 개발 동아리 <strong class="font-semibold text-slate-700">SODA</strong>와 창업학회 <strong class="font-semibold text-slate-700">Venturers</strong>가 어떻게 교재의 방법론을 실제 성과로 바꾸는지를 정리합니다.
+    </p>
+
+    <div class="mt-6 inline-flex rounded-xl border border-amber-200 bg-amber-50/80 px-3 py-2 text-xs text-amber-800">
+      현재 표시된 성과·팀 목록은 초기 구조 검증용 예시입니다. 실제 활동 기록은 커뮤니티 리더와 확정 후 갱신됩니다.
+    </div>
+  </section>
+
+  {communities.map((community) => (
+    <section id={community.id} class="relative scroll-mt-24 border-t border-slate-100 py-14">
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-x-0 top-0 h-1"
+        style={`background: linear-gradient(90deg, ${community.color}, ${community.color}55)`}
+      ></div>
+      <div class="mx-auto max-w-6xl px-4">
+        <div class="grid gap-8 md:grid-cols-[1fr_1.4fr] md:items-start">
+          <aside class="md:sticky md:top-24">
+            <p
+              class="text-[11px] font-semibold uppercase tracking-[0.18em]"
+              style={`color: ${community.color}`}
+            >
+              {communityTypeLabel[community.type]}
+              {community.founded ? ` · Since ${community.founded}` : ''}
+            </p>
+            <h2 class="mt-1 text-3xl font-bold text-slate-900">
+              {community.name}
+              <span class="ml-2 text-sm font-medium uppercase tracking-[0.18em] text-slate-400">
+                {community.nameEn}
+              </span>
+            </h2>
+            <p class="mt-2 text-base font-medium" style={`color: ${community.color}`}>
+              {community.tagline}
+            </p>
+            <p class="mt-4 text-sm text-slate-600">{community.summary}</p>
+
+            <div class="mt-5 rounded-2xl border border-slate-100 bg-slate-50/70 p-4">
+              <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+                포털에서의 포지셔닝
+              </p>
+              <p class="mt-2 text-sm text-slate-700">{community.positioning}</p>
+            </div>
+
+            <dl class="mt-5 grid grid-cols-2 gap-3 text-sm">
+              {community.memberCount && (
+                <div class="rounded-xl border border-slate-100 bg-white px-3 py-2">
+                  <dt class="text-[11px] uppercase tracking-wider text-slate-400">활동 인원</dt>
+                  <dd class="mt-0.5 font-semibold text-slate-900">{community.memberCount}명</dd>
+                </div>
+              )}
+              {community.cadence && (
+                <div class="rounded-xl border border-slate-100 bg-white px-3 py-2">
+                  <dt class="text-[11px] uppercase tracking-wider text-slate-400">운영 주기</dt>
+                  <dd class="mt-0.5 text-xs font-semibold text-slate-900">{community.cadence}</dd>
+                </div>
+              )}
+            </dl>
+
+            <div class="mt-4 flex flex-wrap gap-1.5">
+              {community.tags.map((tag) => (
+                <span
+                  class="inline-flex rounded-md px-2 py-0.5 text-xs"
+                  style={`background-color: ${community.color}12; color: ${community.color}`}
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          </aside>
+
+          <div>
+            <h3 class="text-lg font-bold text-slate-900">주요 성과 타임라인</h3>
+            <ol class="mt-4 space-y-4">
+              {community.highlights.map((h) => {
+                const HIcon = h.kind ? kindIcon[h.kind] : Flag;
+                return (
+                  <li class="relative rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                    <span
+                      aria-hidden="true"
+                      class="absolute -left-px top-5 h-8 w-1 rounded-r"
+                      style={`background-color: ${community.color}`}
+                    ></span>
+                    <div class="flex items-start gap-3">
+                      <span
+                        class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ring-1 ring-black/5"
+                        style={`background-color: ${community.color}15; color: ${community.color}`}
+                      >
+                        <HIcon className="h-4 w-4" aria-hidden="true" />
+                      </span>
+                      <div class="min-w-0">
+                        <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+                          {h.year}
+                        </p>
+                        <p class="mt-0.5 text-base font-semibold text-slate-900">{h.title}</p>
+                        <p class="mt-1 text-sm text-slate-600">{h.description}</p>
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
+
+            {community.teams && community.teams.length > 0 && (
+              <div class="mt-10">
+                <h3 class="text-lg font-bold text-slate-900">배출 · 활동 팀</h3>
+                <div class="mt-4 grid gap-3 md:grid-cols-2">
+                  {community.teams.map((team) => (
+                    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                      <p class="text-[11px] uppercase tracking-[0.18em] text-slate-400">
+                        {team.year ?? ''}
+                      </p>
+                      <p class="mt-0.5 text-base font-semibold text-slate-900">{team.name}</p>
+                      <p class="mt-1 text-sm text-slate-600">{team.result}</p>
+                      {team.members && (
+                        <p class="mt-2 text-xs text-slate-400">멤버 {team.members}명</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  ))}
+</BaseLayout>

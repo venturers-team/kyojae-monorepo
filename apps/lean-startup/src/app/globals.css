@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --accent: #2563eb;
+  --accent-foreground: #ffffff;
+  --muted: #64748b;
+  --card: #ffffff;
+  --border: #e2e8f0;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-card: var(--card);
+  --color-border: var(--border);
+  --font-sans: var(--font-noto-sans-kr), "Pretendard", -apple-system,
+    BlinkMacSystemFont, system-ui, sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  word-break: keep-all;
+  font-size: clamp(15px, 2.6vw + 11px, 17px);
+  line-height: 1.65;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+h1 {
+  font-size: clamp(1.75rem, 4.5vw + 0.5rem, 2.5rem);
+}
+
+h2 {
+  font-size: clamp(1.375rem, 3vw + 0.5rem, 1.875rem);
+}
+
+h3 {
+  font-size: clamp(1.125rem, 2vw + 0.5rem, 1.375rem);
+}
+
+.prose-korean p {
+  line-height: 1.85;
+  margin-bottom: 1.1em;
+  color: #334155;
+}
+
+.prose-korean h2 {
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.prose-korean h3 {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose-korean blockquote {
+  border-left: 4px solid var(--accent);
+  padding: 0.75rem 1.25rem;
+  background: #eff6ff;
+  border-radius: 0 0.5rem 0.5rem 0;
+  color: #1e3a8a;
+  margin: 1.5rem 0;
+}

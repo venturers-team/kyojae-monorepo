@@ -1,0 +1,151 @@
+---
+interface Pair {
+  axis: string;
+  gov: string;
+  vc: string;
+}
+
+interface Props {
+  rows: Pair[];
+  title?: string;
+}
+
+const { rows, title = '정부지원 톤 vs 투자 톤' } = Astro.props;
+---
+
+<figure class="pair-box">
+  <figcaption class="pair-box__caption">
+    <span class="pair-box__kicker">PAIR</span>
+    {title}
+  </figcaption>
+  <div class="pair-box__header">
+    <div class="pair-box__axis-head">축</div>
+    <div class="pair-box__gov-head">정부지원 톤</div>
+    <div class="pair-box__vc-head">투자 톤</div>
+  </div>
+  {
+    rows.map((r) => (
+      <div class="pair-box__row">
+        <div class="pair-box__axis">{r.axis}</div>
+        <div class="pair-box__gov">{r.gov}</div>
+        <div class="pair-box__vc">{r.vc}</div>
+      </div>
+    ))
+  }
+</figure>
+
+<style>
+  .pair-box {
+    margin: 2rem 0;
+    padding: 0;
+    border: 1px solid var(--psst-line);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--psst-bg-raise);
+  }
+  .pair-box__caption {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.9rem 1.3rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--psst-ink);
+    border-bottom: 1px solid var(--psst-line);
+    background: var(--psst-bg-mute);
+  }
+  .pair-box__kicker {
+    font-family: var(--sl-font-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    padding: 0.25rem 0.55rem;
+    background: var(--psst-gradient);
+    color: white;
+    border-radius: 999px;
+  }
+  .pair-box__header,
+  .pair-box__row {
+    display: grid;
+    grid-template-columns: 140px 1fr 1fr;
+    gap: 0;
+  }
+  .pair-box__header {
+    font-family: var(--sl-font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    color: var(--psst-ink-mute);
+    border-bottom: 1px solid var(--psst-line);
+  }
+  .pair-box__axis-head,
+  .pair-box__gov-head,
+  .pair-box__vc-head {
+    padding: 0.7rem 1.2rem;
+  }
+  .pair-box__gov-head {
+    color: #60A5FA;
+    border-left: 1px solid var(--psst-line);
+  }
+  .pair-box__vc-head {
+    color: var(--psst-primary);
+    border-left: 1px solid var(--psst-line);
+  }
+  .pair-box__row {
+    border-bottom: 1px solid var(--psst-line);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+  .pair-box__row:last-child {
+    border-bottom: none;
+  }
+  .pair-box__axis {
+    padding: 0.9rem 1.2rem;
+    font-weight: 600;
+    color: var(--psst-ink);
+    background: var(--psst-bg-mute);
+  }
+  .pair-box__gov,
+  .pair-box__vc {
+    padding: 0.9rem 1.2rem;
+    color: var(--psst-ink-soft);
+    border-left: 1px solid var(--psst-line);
+  }
+  .pair-box__gov {
+    background: rgba(96, 165, 250, 0.05);
+  }
+  .pair-box__vc {
+    background: rgba(129, 140, 248, 0.05);
+  }
+  @media (max-width: 720px) {
+    .pair-box__header {
+      display: none;
+    }
+    .pair-box__row {
+      grid-template-columns: 1fr;
+    }
+    .pair-box__axis {
+      font-size: 0.85rem;
+    }
+    .pair-box__gov,
+    .pair-box__vc {
+      border-left: none;
+      border-top: 1px solid var(--psst-line);
+    }
+    .pair-box__gov::before {
+      content: '정부지원 ';
+      font-family: var(--sl-font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      color: #60A5FA;
+      margin-right: 0.5rem;
+    }
+    .pair-box__vc::before {
+      content: '투자 ';
+      font-family: var(--sl-font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      color: var(--psst-primary);
+      margin-right: 0.5rem;
+    }
+  }
+</style>

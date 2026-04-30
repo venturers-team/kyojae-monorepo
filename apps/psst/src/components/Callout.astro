@@ -1,0 +1,139 @@
+---
+type Tone = 'insight' | 'warning' | 'anecdote' | 'principle';
+
+interface Props {
+  title?: string;
+  tone?: Tone;
+  icon?: string;
+}
+
+const { title, tone = 'insight', icon } = Astro.props;
+
+const toneLabel: Record<Tone, string> = {
+  insight: 'INSIGHT',
+  warning: '주의',
+  anecdote: '사례',
+  principle: '원칙',
+};
+
+const toneIcon: Record<Tone, string> = {
+  insight: '◈',
+  warning: '▲',
+  anecdote: '◉',
+  principle: '§',
+};
+---
+
+<aside class={`callout callout--${tone}`}>
+  <header class="callout__header">
+    <span class="callout__icon" aria-hidden>{icon ?? toneIcon[tone]}</span>
+    <span class="callout__kicker">{toneLabel[tone]}</span>
+    {title && <span class="callout__title">{title}</span>}
+  </header>
+  <div class="callout__body">
+    <slot />
+  </div>
+</aside>
+
+<style>
+  .callout {
+    margin: 2rem 0;
+    padding: 1.3rem 1.5rem 1.5rem;
+    border-radius: 16px;
+    border: 1px solid var(--psst-line);
+    background: var(--psst-bg-raise);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .callout--insight {
+    border-left: 3px solid var(--psst-primary);
+  }
+  .callout--warning {
+    border-left: 3px solid #F87171;
+  }
+  .callout--anecdote {
+    border-left: 3px solid var(--psst-lime);
+  }
+  .callout--principle {
+    border-left: 3px solid #C084FC;
+  }
+
+  .callout__header {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  .callout__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .callout--insight .callout__icon {
+    background: var(--psst-primary-soft);
+    color: var(--psst-primary);
+  }
+  .callout--warning .callout__icon {
+    background: rgba(248, 113, 113, 0.15);
+    color: #F87171;
+  }
+  .callout--anecdote .callout__icon {
+    background: var(--psst-lime-soft);
+    color: var(--psst-lime);
+  }
+  .callout--principle .callout__icon {
+    background: rgba(192, 132, 252, 0.15);
+    color: #C084FC;
+  }
+
+  .callout__kicker {
+    font-family: var(--sl-font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+  }
+
+  .callout--insight .callout__kicker {
+    color: var(--psst-primary);
+  }
+  .callout--warning .callout__kicker {
+    color: #F87171;
+  }
+  .callout--anecdote .callout__kicker {
+    color: var(--psst-lime);
+  }
+  .callout--principle .callout__kicker {
+    color: #C084FC;
+  }
+
+  .callout__title {
+    font-weight: 600;
+    color: var(--psst-ink);
+    font-size: 0.98rem;
+  }
+
+  .callout__body {
+    color: var(--psst-ink-soft);
+    font-size: 0.97rem;
+    line-height: 1.7;
+  }
+
+  .callout__body :global(p:first-child) {
+    margin-top: 0;
+  }
+  .callout__body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+  .callout__body :global(strong) {
+    color: var(--psst-ink);
+  }
+</style>

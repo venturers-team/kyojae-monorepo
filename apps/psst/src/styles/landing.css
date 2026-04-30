@@ -1,0 +1,526 @@
+/* ============================================================
+ * PSST 사업계획서 가이드 — 모던 에듀테크 테마
+ * 참조: Linear · Sana · Vercel · Maven
+ * 팔레트: zinc 베이스 + 인디고/바이올렛 그라디언트 + 라임 네온 포인트
+ * ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* --- 라이트 모드 --- */
+:root[data-theme='light'] {
+  --sl-color-bg: #FAFAFA;
+  --sl-color-bg-nav: #FFFFFF;
+  --sl-color-bg-sidebar: #F4F4F5;
+
+  --sl-color-text: #09090B;
+  --sl-color-text-accent: #4F46E5;
+
+  --sl-color-accent-low: #EEF2FF;
+  --sl-color-accent: #6366F1;
+  --sl-color-accent-high: #4338CA;
+
+  --sl-color-hairline: rgba(9, 9, 11, 0.06);
+  --sl-color-hairline-light: rgba(9, 9, 11, 0.04);
+  --sl-color-hairline-shade: rgba(9, 9, 11, 0.1);
+
+  --psst-bg: #FAFAFA;
+  --psst-bg-raise: #FFFFFF;
+  --psst-bg-mute: #F4F4F5;
+  --psst-ink: #09090B;
+  --psst-ink-soft: #3F3F46;
+  --psst-ink-mute: #71717A;
+  --psst-line: rgba(9, 9, 11, 0.08);
+  --psst-line-strong: rgba(9, 9, 11, 0.12);
+
+  --psst-primary: #6366F1;
+  --psst-primary-soft: #EEF2FF;
+  --psst-primary-strong: #4F46E5;
+  --psst-violet: #8B5CF6;
+  --psst-lime: #65A30D;
+  --psst-lime-soft: #ECFCCB;
+
+  --psst-gradient: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #A855F7 100%);
+  --psst-gradient-soft: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+}
+
+/* --- 다크 모드 (기본) --- */
+:root[data-theme='dark'],
+:root {
+  --sl-color-bg: #09090B;
+  --sl-color-bg-nav: #0C0C0F;
+  --sl-color-bg-sidebar: #09090B;
+
+  --sl-color-text: #FAFAFA;
+  --sl-color-text-accent: #A78BFA;
+
+  --sl-color-accent-low: #1E1B3A;
+  --sl-color-accent: #818CF8;
+  --sl-color-accent-high: #C7D2FE;
+
+  --sl-color-hairline: rgba(255, 255, 255, 0.08);
+  --sl-color-hairline-light: rgba(255, 255, 255, 0.04);
+  --sl-color-hairline-shade: rgba(255, 255, 255, 0.12);
+
+  --psst-bg: #09090B;
+  --psst-bg-raise: #18181B;
+  --psst-bg-mute: #131316;
+  --psst-ink: #FAFAFA;
+  --psst-ink-soft: #D4D4D8;
+  --psst-ink-mute: #A1A1AA;
+  --psst-line: rgba(255, 255, 255, 0.08);
+  --psst-line-strong: rgba(255, 255, 255, 0.14);
+
+  --psst-primary: #818CF8;
+  --psst-primary-soft: rgba(129, 140, 248, 0.15);
+  --psst-primary-strong: #A78BFA;
+  --psst-violet: #A78BFA;
+  --psst-lime: #A3E635;
+  --psst-lime-soft: rgba(163, 230, 53, 0.15);
+
+  --psst-gradient: linear-gradient(135deg, #818CF8 0%, #A78BFA 50%, #C084FC 100%);
+  --psst-gradient-soft: linear-gradient(135deg, rgba(129, 140, 248, 0.2) 0%, rgba(192, 132, 252, 0.2) 100%);
+}
+
+/* 본문 전체 폰트 */
+:root {
+  --sl-font: 'Inter', 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  --sl-font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* 레이아웃 조정 — 왼쪽 사이드바 축소, 본문 확장, 오른쪽 TOC 자동 축소 */
+  --sl-sidebar-width: 15.5rem;
+  --sl-content-width: 56rem;
+}
+
+/* 왼쪽 사이드바 링크 — 줄바꿈 방지 + 넘치면 말줄임 */
+.sidebar-content a,
+.sidebar-content span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+/* Mermaid 다이어그램 — 자연 크기 유지, 컨테이너보다 넓으면 가로 스크롤 */
+
+/* 호스트: margin + 페이드 힌트의 기준점(position: relative). overflow 없음 */
+.mermaid-host {
+  margin-block: 1.8rem;
+  position: relative;
+}
+
+.mermaid {
+  padding: 1.1rem;
+  background: var(--psst-bg-raise);
+  border: 1px solid var(--psst-line);
+  border-radius: 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  /* 작은 다이어그램도 프레임이 납작해 보이지 않도록 최소 높이 확보 */
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.mermaid > svg {
+  max-width: none !important;
+  height: auto !important;
+  display: block;
+  margin: 0 auto;
+  /* 다이어그램 자연 크기로 — init config의 useMaxWidth:false가 실제 SVG 크기를 유지시킴 */
+  flex-shrink: 0;
+}
+
+/* 가로 스크롤 가능할 때 우측 페이드 힌트
+   — 호스트에 붙여야 scroll container 밖에서 고정 위치 유지 가능 */
+.mermaid-host::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 40px;
+  background: linear-gradient(to right, transparent, var(--psst-bg-raise));
+  pointer-events: none;
+  border-radius: 0 12px 12px 0;
+  opacity: 0;
+  transition: opacity 200ms ease;
+  z-index: 1;
+}
+
+/* 실제 오버플로우가 있고 아직 끝까지 스크롤하지 않은 경우에만 표시 */
+.mermaid-host[data-overflow="true"]:not([data-at-end="true"])::after {
+  opacity: 0.6;
+}
+
+/* 스크롤바 스타일 */
+.mermaid::-webkit-scrollbar {
+  height: 8px;
+}
+.mermaid::-webkit-scrollbar-track {
+  background: transparent;
+}
+.mermaid::-webkit-scrollbar-thumb {
+  background: var(--psst-line-strong);
+  border-radius: 4px;
+}
+.mermaid::-webkit-scrollbar-thumb:hover {
+  background: var(--psst-ink-mute);
+}
+
+/* TOC 글자 약간 축소로 좁은 폭에서도 잘 읽히게 */
+@media (min-width: 72rem) {
+  .right-sidebar starlight-toc a {
+    font-size: 0.82rem;
+    line-height: 1.45;
+    padding-block: 0.25rem;
+  }
+  .right-sidebar h2 {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+}
+
+body {
+  font-family: var(--sl-font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 풀블리드 Hero의 100vw가 스크롤바 폭과 겹쳐 생기는 미세 가로 스크롤 방지 */
+html,
+body {
+  overflow-x: clip;
+}
+
+/* ============================================================
+ * 모던 Hero
+ * ============================================================ */
+
+/* 히어로는 테마와 무관하게 항상 다크 — 라이트 모드에서도 토큰 재정의 */
+.hero-modern {
+  --psst-bg: #09090B;
+  --psst-bg-raise: #18181B;
+  --psst-bg-mute: #131316;
+  --psst-ink: #FAFAFA;
+  --psst-ink-soft: #D4D4D8;
+  --psst-ink-mute: #A1A1AA;
+  --psst-line: rgba(255, 255, 255, 0.08);
+  --psst-line-strong: rgba(255, 255, 255, 0.14);
+  --psst-primary: #818CF8;
+  --psst-primary-soft: rgba(129, 140, 248, 0.15);
+  --psst-primary-strong: #A78BFA;
+  --psst-violet: #A78BFA;
+  --psst-gradient: linear-gradient(135deg, #818CF8 0%, #A78BFA 50%, #C084FC 100%);
+
+  color-scheme: dark;
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-top: 0;
+  min-height: 84vh;
+  background: #09090B;
+  color: #FAFAFA;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Hyperspeed background layer */
+.hero-modern__plasma {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+/* Grid pattern overlay */
+.hero-modern::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--psst-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--psst-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+.hero-modern__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 920px;
+  padding: 6rem 2rem 5rem;
+  text-align: center;
+}
+
+.hero-modern__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--sl-font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--psst-ink-soft);
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--psst-line-strong);
+  border-radius: 999px;
+  background: var(--psst-bg-mute);
+  margin-bottom: 2rem;
+}
+
+.hero-modern__eyebrow::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--psst-primary);
+  border-radius: 999px;
+  box-shadow: 0 0 12px var(--psst-primary);
+}
+
+.hero-modern__headline {
+  font-family: var(--sl-font);
+  font-weight: 800;
+  font-size: clamp(2.6rem, 6.5vw, 5.2rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  margin: 0;
+  color: var(--psst-ink);
+}
+
+.hero-modern__headline-gradient {
+  background: var(--psst-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+.hero-modern__sub {
+  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  line-height: 1.55;
+  color: var(--psst-ink-soft);
+  margin: 1.8rem auto 0;
+  max-width: 34em;
+  font-weight: 400;
+}
+
+.hero-modern__cta {
+  margin-top: 2.8rem;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero-modern__btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.6rem;
+  background: var(--psst-gradient);
+  color: #FFFFFF;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border: none;
+  box-shadow: 0 8px 24px -8px rgba(99, 102, 241, 0.5);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.hero-modern__btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 36px -10px rgba(99, 102, 241, 0.65);
+}
+
+.hero-modern__btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.4rem;
+  background: var(--psst-bg-raise);
+  color: var(--psst-ink);
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border: 1px solid var(--psst-line-strong);
+  transition: background 160ms ease, border-color 160ms ease;
+}
+
+.hero-modern__btn-ghost:hover {
+  background: var(--psst-bg-mute);
+  border-color: var(--psst-ink-mute);
+}
+
+.hero-modern__meta {
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  font-family: var(--sl-font-mono);
+  font-size: 0.75rem;
+  color: var(--psst-ink-mute);
+  letter-spacing: 0.05em;
+}
+
+.hero-modern__meta span::before {
+  content: '•';
+  margin-right: 0.5rem;
+  color: var(--psst-primary);
+}
+
+/* ============================================================
+ * 목차 (인덱스) — 모던 버전
+ * ============================================================ */
+
+.doc-index,
+.doc-index-wrapper {
+  list-style: none;
+  padding: 0;
+  margin: 2.5rem 0 4rem;
+  display: grid;
+  gap: 0.5rem;
+  border: none;
+}
+
+.doc-index__row {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  column-gap: 1.25rem;
+  border-radius: 16px;
+  border: 1px solid var(--psst-line);
+  background: var(--psst-bg-raise);
+  text-decoration: none;
+  color: var(--psst-ink);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.doc-index__row:hover {
+  transform: translateX(4px);
+  border-color: var(--psst-primary);
+  box-shadow: 0 8px 24px -12px rgba(99, 102, 241, 0.3);
+}
+
+.doc-index__num {
+  font-family: var(--sl-font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--psst-primary);
+  letter-spacing: 0.06em;
+}
+
+.doc-index__title {
+  font-weight: 600;
+  font-size: 1.08rem;
+  color: var(--psst-ink);
+  line-height: 1.4;
+}
+
+.doc-index__title small {
+  display: block;
+  font-weight: 400;
+  font-size: 0.88rem;
+  color: var(--psst-ink-mute);
+  margin-top: 0.35rem;
+  line-height: 1.5;
+}
+
+.doc-index__meta {
+  font-family: var(--sl-font-mono);
+  font-size: 0.68rem;
+  color: var(--psst-ink-mute);
+  letter-spacing: 0.14em;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--psst-line);
+  border-radius: 999px;
+  background: var(--psst-bg-mute);
+}
+
+@media (max-width: 720px) {
+  .doc-index__row {
+    grid-template-columns: 60px 1fr;
+    padding: 1rem 1.2rem;
+    row-gap: 0.3rem;
+  }
+  .doc-index__meta {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
+/* ============================================================
+ * 랜딩(splash) 페이지 풀블리드 처리
+ * ============================================================ */
+
+body:has(.hero-modern) main .content-panel,
+body:has(.doc-hero) main .content-panel,
+body:has(.landing-hero) main .content-panel {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Starlight가 splash에서도 렌더하는 빈 페이지-타이틀 패널 숨김 — 히어로 위 검은 블록 제거 */
+body:has(.hero-modern) main > .content-panel:first-child:has(> .sl-container:empty) {
+  display: none !important;
+}
+
+body:has(.hero-modern) main .content-panel + .content-panel,
+body:has(.doc-hero) main .content-panel + .content-panel,
+body:has(.landing-hero) main .content-panel + .content-panel {
+  padding-top: 0 !important;
+}
+
+/* ============================================================
+ * 본문 타이포·링크 조정
+ * ============================================================ */
+
+article h1,
+article h2,
+article h3 {
+  font-family: var(--sl-font);
+  letter-spacing: -0.02em;
+}
+
+article h1 {
+  font-weight: 800;
+}
+
+article h2 {
+  font-weight: 700;
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--psst-line);
+  margin-top: 2.5rem;
+}
+
+article h3 {
+  font-weight: 600;
+}
+
+article a:not(.doc-index__row):not(.hero-modern__btn-primary):not(.hero-modern__btn-ghost) {
+  color: var(--psst-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(99, 102, 241, 0.3);
+  transition: text-decoration-color 160ms ease;
+}
+
+article a:not(.doc-index__row):not(.hero-modern__btn-primary):not(.hero-modern__btn-ghost):hover {
+  text-decoration-color: var(--psst-primary);
+}

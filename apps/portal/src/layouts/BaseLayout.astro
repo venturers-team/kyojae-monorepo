@@ -1,0 +1,67 @@
+---
+import '../styles/global.css';
+import Navbar from '../components/layout/Navbar.astro';
+import Footer from '../components/layout/Footer.astro';
+import { siteMeta } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  current?: string;
+}
+
+const {
+  title = siteMeta.title,
+  description = siteMeta.description,
+  ogTitle,
+  ogDescription,
+  ogImage = siteMeta.ogImage,
+  current = Astro.url.pathname,
+} = Astro.props;
+
+const pageTitle = title === siteMeta.title ? title : `${title} · ${siteMeta.shortTitle}`;
+const socialTitle = ogTitle ?? (title === siteMeta.title ? siteMeta.ogTitle : pageTitle);
+const socialDescription = ogDescription ?? description;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url).toString();
+const absoluteOgImage = new URL(ogImage, Astro.site ?? Astro.url).toString();
+---
+
+<!doctype html>
+<html lang="ko" class="h-full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteMeta.shortTitle} />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:title" content={socialTitle} />
+    <meta property="og:description" content={socialDescription} />
+    <meta property="og:image" content={absoluteOgImage} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={socialTitle} />
+    <meta name="twitter:description" content={socialDescription} />
+    <meta name="twitter:image" content={absoluteOgImage} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+  </head>
+  <body class="flex min-h-screen flex-col bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-indigo-600 focus:px-3 focus:py-1 focus:text-sm focus:text-white"
+    >
+      본문으로 이동
+    </a>
+    <Navbar current={current} />
+    <main id="main-content" class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

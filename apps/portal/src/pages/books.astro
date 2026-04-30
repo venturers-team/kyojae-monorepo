@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BookCard from '../components/shared/BookCard';
+import GradientText from '../components/effects/GradientText';
+import Squares from '../components/effects/Squares';
+import { books } from '../data/books';
+import { categoryLabel, type BookCategory } from '../types/book';
+
+const grouped = Object.entries(
+  books.reduce<Record<BookCategory, typeof books>>((acc, book) => {
+    if (!acc[book.category]) acc[book.category] = [];
+    acc[book.category].push(book);
+    return acc;
+  }, {} as Record<BookCategory, typeof books>),
+);
+---
+
+<BaseLayout
+  title="추천 도서"
+  description="조성배 교수가 한동대 창업·AI 수업에서 학생에게 권하는 도서 목록. 린 스타트업·제품·전략·AI 카테고리별로 정리."
+>
+  <section class="relative mx-auto max-w-6xl px-4 py-12">
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-0 -z-10 opacity-50 dark:opacity-20"
+    >
+      <Squares
+        speed={0.3}
+        squareSize={52}
+        direction="diagonal"
+        borderColor="rgba(99, 102, 241, 0.1)"
+        hoverFillColor="rgba(99, 102, 241, 0.08)"
+        className="h-full w-full"
+        client:load
+      />
+    </div>
+
+    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-indigo-600">/books</p>
+    <h1 class="mt-2 text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
+      <GradientText colors={['#4f46e5', '#3b82f6', '#22d3ee']} client:load>
+        조성배 교수 추천 도서
+      </GradientText>
+    </h1>
+    <p class="mt-2 max-w-2xl text-sm text-slate-500">
+      한동대 창업·AI 수업에서 교수님이 학생에게 권하는 책 {books.length}권. 각 책은 포털의 어떤 교재와 연결되는지·왜 추천되는지를 한 문단으로 정리했습니다. 교재로 뼈대를 잡고, 책으로 깊이를 더한 다음, 커뮤니티(SODA·Venturers)에서 실행해 보세요.
+    </p>
+
+    <div class="mt-6 inline-flex rounded-xl border border-amber-200 bg-amber-50/80 px-3 py-2 text-xs text-amber-800">
+      현재 표시된 목록은 초기 구조 검증용 예시입니다. 실제 추천 도서·추천 사유는 교수님과 확정 후 갱신됩니다.
+    </div>
+
+    {grouped.map(([category, list]) => (
+      <div class="mt-14">
+        <div class="mb-5 flex items-baseline justify-between gap-4">
+          <h2 class="text-xl font-bold text-slate-900">
+            {categoryLabel[category as BookCategory]}
+          </h2>
+          <span class="text-xs text-slate-400">{list.length}권</span>
+        </div>
+        <div class="grid gap-5 md:grid-cols-2">
+          {list.map((book) => (
+            <BookCard book={book} client:visible />
+          ))}
+        </div>
+      </div>
+    ))}
+  </section>
+</BaseLayout>
